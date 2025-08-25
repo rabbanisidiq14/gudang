@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard Gudang</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f9;
+        margin: 0;
+        padding: 0;
+      }
+      header {
+        background: #2c3e50;
+        color: white;
+        padding: 20px;
+        text-align: center;
+      }
+      main {
+        display: flex;
+        justify-content: center;
+        margin-top: 50px;
+        gap: 40px;
+        flex-wrap: wrap;
+      }
+      a.card {
+        display: block;
+        width: 200px;
+        height: 150px;
+        text-decoration: none;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        padding: 30px 10px;
+        color: #2c3e50;
+        font-size: 18px;
+        font-weight: bold;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      a.card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Dashboard Gudang</h1>
+      <p>Pilih modul untuk navigasi</p>
+    </header>
+    <main>
+      <a href="{% url 'halaman_sensor' %}" class="card">Monitor Sensor</a>
+      <a href="{% url 'konfigurasi_pengendali' %}" class="card"
+        >Konfigurasi Pengendali</a
+      >
+    </main>
+  </body>
+</html>

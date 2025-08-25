@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Monitoring Sensor Gudang</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #f4f4f9;
+      }
+      header {
+        background: #2c3e50;
+        color: white;
+        padding: 20px;
+        text-align: center;
+      }
+      main {
+        max-width: 800px;
+        margin: 30px auto;
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      canvas {
+        width: 100% !important;
+        height: auto !important;
+      }
+      .btn-kembali {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: background 0.2s;
+      }
+      .btn-kembali:hover {
+        background: #2980b9;
+      }
+      @media (max-width: 480px) {
+        main {
+          margin: 10px;
+          padding: 15px;
+        }
+        header {
+          padding: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Monitoring Suhu & Kelembapan Gudang</h1>
+      <p>Data real-time sensor</p>
+    </header>
+
+    <main>
+      <canvas id="grafikSensor"></canvas>
+
+      <a href="/" class="btn-kembali">← Kembali ke Dashboard</a>
+    </main>
+
+    <script>
+      const ctx = document.getElementById("grafikSensor").getContext("2d");
+      const chart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: [], // waktu
+          datasets: [
+            {
+              label: "Suhu (°C)",
+              borderColor: "red",
+              backgroundColor: "rgba(255,0,0,0.1)",
+              fill: true,
+              data: [],
+            },
+            {
+              label: "Kelembapan (%)",
+              borderColor: "blue",
+              backgroundColor: "rgba(0,0,255,0.1)",
+              fill: true,
+              data: [],
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          animation: false,
+          scales: {
+            x: {
+              title: { display: true, text: "Waktu" },
+            },
+            y: {
+              title: { display: true, text: "Nilai" },
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+
+      async function ambilData() {
+        try {
+          const res = await fetch("/pengendali/sensor/");
+          const data = await res.json();
+
+          data.reverse(); // urutkan dari lama → terbaru
+
+          chart.data.labels = data.map((d) =>
+            new Date(d.waktu).toLocaleTimeString()
+          );
+          chart.data.datasets[0].data = data.map((d) => d.suhu);
+          chart.data.datasets[1].data = data.map((d) => d.kelembapan);
+          chart.update();
+        } catch (err) {
+          console.error("Gagal mengambil data:", err);
+        }
+      }
+
+      // ambil data setiap 2 detik
+      setInterval(ambilData, 2000);
+      ambilData();
+    </script>
+  </body>
+</html>
