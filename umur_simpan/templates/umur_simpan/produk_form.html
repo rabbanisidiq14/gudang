@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Form Produk</title>
+  <style>
+    body{font-family:Arial,sans-serif;background:#f4f4f9;margin:0}
+    header{background:#2c3e50;color:#fff;padding:16px;text-align:center}
+    main{max-width:640px;margin:24px auto;padding:16px;background:#fff;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,.08)}
+    label{display:block;margin-top:10px;font-weight:bold}
+    input, select, textarea{width:100%;padding:10px;border:1px solid #ddd;border-radius:6px}
+    .btn{margin-top:16px;padding:10px 18px;border:none;border-radius:8px;background:#3498db;color:#fff;cursor:pointer}
+    .link{display:inline-block;margin-top:16px;color:#3498db;text-decoration:none}
+  </style>
+</head>
+<body>
+<header><h1>{{ view.object|default:"Tambah Produk" }}</h1></header>
+<main>
+  <form method="post">
+    {% csrf_token %}
+    <label>Nama</label>
+    {{ form.nama }}
+    <label>Jenis</label>
+    {{ form.jenis }}
+    <label>Keterangan</label>
+    {{ form.keterangan }}
+    <button class="btn" type="submit">Simpan</button>
+  </form>
+  <a class="link" href="{% url 'produk_list' %}">← Kembali</a>
+</main>
+</body>
+</html>

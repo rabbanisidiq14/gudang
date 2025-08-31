@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Prediksi Umur Simpan</title>
+  <style>
+    body{font-family:Arial,sans-serif;background:#f4f4f9;margin:0}
+    header{background:#2c3e50;color:#fff;padding:16px;text-align:center}
+    main{max-width:800px;margin:24px auto;padding:16px;background:#fff;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,.08)}
+    form .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    form label{display:block;font-weight:bold;margin-top:10px}
+    form input, form select, form textarea{width:100%;padding:10px;border:1px solid #ddd;border-radius:6px}
+    .btn{display:inline-block;padding:10px 18px;border:none;border-radius:8px;cursor:pointer;color:#fff;background:#3498db;margin-top:16px}
+    .btn:hover{background:#2980b9}
+    .btn-link{display:inline-block;margin-top:16px;text-decoration:none;color:#3498db}
+    table{width:100%;border-collapse:collapse;margin-top:20px}
+    th,td{border:1px solid #eee;padding:10px;text-align:left;font-size:14px}
+    th{background:#fafafa}
+    .badge{padding:3px 8px;border-radius:6px;background:#ecf0f1}
+    @media (max-width:640px){form .row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>Prediksi Umur Simpan (Harrington)</h1>
+</header>
+
+<main>
+  {% if messages %}
+    {% for m in messages %}
+      <div class="badge">{{ m }}</div>
+    {% endfor %}
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="row">
+      <div>
+        <label>Produk</label>
+        {{ form.produk }}
+      </div>
+      <div>
+        <label>Kadar Air (%)</label>
+        {{ form.kadar_air }}
+      </div>
+      <div>
+        <label>Suhu (°C)</label>
+        {{ form.suhu }}
+      </div>
+      <div>
+        <label>RH (%)</label>
+        {{ form.kelembapan }}
+      </div>
+    </div>
+    <button type="submit" class="btn">Hitung & Simpan</button>
+  </form>
+
+  <h2>Riwayat Prediksi Terakhir</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Waktu</th>
+        <th>Produk</th>
+        <th>Kadar Air (%)</th>
+        <th>Suhu (°C)</th>
+        <th>RH (%)</th>
+        <th>aw</th>
+        <th>Umur (hari)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in riwayat %}
+      <tr>
+        <td>{{ p.dibuat|date:"Y-m-d H:i" }}</td>
+        <td>{{ p.produk }}</td>
+        <td>{{ p.kadar_air }}</td>
+        <td>{{ p.suhu }}</td>
+        <td>{{ p.kelembapan }}</td>
+        <td>{{ p.aw|floatformat:2 }}</td>
+        <td><strong>{{ p.umur_hari }}</strong></td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="7">Belum ada prediksi.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <a class="btn-link" href="/">← Kembali ke Dashboard</a>
+  <a class="btn-link" href="{% url 'produk_list' %}">Kelola Produk →</a>
+</main>
+</body>
+</html>

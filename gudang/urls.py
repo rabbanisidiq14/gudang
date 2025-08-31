@@ -16,9 +16,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from pengendali.views import SensorAPI, KipasAPI
-from tikus.views import AlertAPI
-from umur_simpan.views import PrediksiAPI
 from core.views import beranda
 urlpatterns = [
     path('admin/', admin.site.urls),

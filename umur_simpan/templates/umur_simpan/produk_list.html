@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Data Produk</title>
+  <style>
+    body{font-family:Arial,sans-serif;background:#f4f4f9;margin:0}
+    header{background:#2c3e50;color:#fff;padding:16px;text-align:center}
+    main{max-width:900px;margin:24px auto;padding:16px;background:#fff;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,.08)}
+    .btn{display:inline-block;padding:8px 14px;border:none;border-radius:8px;cursor:pointer;color:#fff;background:#27ae60;text-decoration:none}
+    .btn-warn{background:#e67e22}
+    .btn-danger{background:#e74c3c}
+    table{width:100%;border-collapse:collapse;margin-top:16px}
+    th,td{border:1px solid #eee;padding:10px;text-align:left;font-size:14px}
+    th{background:#fafafa}
+    .topbar{display:flex;justify-content:space-between;align-items:center}
+    .link{color:#3498db;text-decoration:none}
+  </style>
+</head>
+<body>
+<header><h1>Data Produk (Gabah/Beras)</h1></header>
+<main>
+  {% if messages %}
+    {% for m in messages %}
+      <div>{{ m }}</div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="topbar">
+    <a class="link" href="/">← Kembali</a>
+    <a class="btn" href="{% url 'produk_tambah' %}">+ Tambah Produk</a>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nama</th>
+        <th>Jenis</th>
+        <th>Keterangan</th>
+        <th>Dibuat</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for pr in produk_list %}
+      <tr>
+        <td>{{ pr.nama }}</td>
+        <td>{{ pr.get_jenis_display }}</td>
+        <td>{{ pr.keterangan|default:"-" }}</td>
+        <td>{{ pr.dibuat|date:"Y-m-d H:i" }}</td>
+        <td>
+          <a class="btn btn-warn" href="{% url 'produk_ubah' pr.pk %}">Ubah</a>
+          <a class="btn btn-danger" href="{% url 'produk_hapus' pr.pk %}">Hapus</a>
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="5">Belum ada produk.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</main>
+</body>
+</html>

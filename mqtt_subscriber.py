@@ -9,19 +9,26 @@ django.setup()
 
 from pengendali.models import SensorLingkungan
 
-MQTT_BROKER = "localhost"
+MQTT_BROKER = "192.168.55.118"
 MQTT_TOPIC = "gudang/sensor"
 
 def on_connect(client, userdata, flags, rc):
     print("Terhubung ke MQTT Broker dengan kode:", rc)
     client.subscribe(MQTT_TOPIC)
 
+def safe_float(value):
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+    
 def on_message(client, userdata, msg):
     try:
         payload = msg.payload.decode()
         data = json.loads(payload)  # asumsi kirim JSON {"suhu": 25.3, "kelembapan": 60}
-        suhu = float(data.get("suhu"))
-        kelembapan = float(data.get("kelembapan"))
+        suhu = safe_float(data.get("suhu"))
+        kelembapan = safe_float(data.get("kelembapan"))
+
 
         # simpan ke database
         SensorLingkungan.objects.create(suhu=suhu, kelembapan=kelembapan)
