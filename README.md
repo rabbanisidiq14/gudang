@@ -22,3 +22,5 @@ python manage.py createsuperuser
 
 # 7. Jalankan server
 python manage.py runserver
+python mqtt_subscriber.py
+python pengendali_service.py
