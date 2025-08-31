@@ -1,3 +1,4 @@
+python version : 3.10.6
 # 1. Clone repo
 git clone https://github.com/rabbanisidiq14/gudang.git <br/>
 cd gudang
