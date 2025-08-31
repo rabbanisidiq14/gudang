@@ -1,6 +1,6 @@
 # 1. Clone repo
-git clone <url-repo-kamu>
-cd <nama-folder-project>
+git clone https://github.com/rabbanisidiq14/gudang.git <br/>
+cd gudang
 
 # 2. Buat virtual environment
 python -m venv venv
@@ -21,6 +21,6 @@ python manage.py migrate
 python manage.py createsuperuser
 
 # 7. Jalankan server
-python manage.py runserver
-python mqtt_subscriber.py
+python manage.py runserver <br/>
+python mqtt_subscriber.py <br/>
 python pengendali_service.py
