@@ -1,0 +1,1 @@
+"C:\Program Files\mosquitto\mosquitto" -v -c "C:\Program Files\mosquitto\testconfig.txt"

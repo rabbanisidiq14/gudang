@@ -8,7 +8,7 @@ django.setup()
 
 from pengendali.models import KonfigurasiPengendali, SensorLingkungan, AktuatorKipas
 
-MQTT_BROKER = "192.168.55.118"
+MQTT_BROKER = "localhost"
 MQTT_TOPIC_KIPAS = "gudang/kipas"
 
 # Ambil status terakhir dari DB kalau ada

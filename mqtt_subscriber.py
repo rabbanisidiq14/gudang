@@ -9,7 +9,7 @@ django.setup()
 
 from pengendali.models import SensorLingkungan
 
-MQTT_BROKER = "192.168.55.118"
+MQTT_BROKER = "localhost"
 MQTT_TOPIC = "gudang/sensor"
 
 def on_connect(client, userdata, flags, rc):
